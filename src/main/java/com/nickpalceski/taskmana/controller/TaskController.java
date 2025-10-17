@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/api/tasks")
 public class TaskController {
@@ -33,5 +34,31 @@ public class TaskController {
     @PostMapping
     public Task createTask(@RequestBody Task task){
         return taskRepository.save(task);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Task> updateTask(@PathVariable Long id, @RequestBody Task updatedTask){
+        Optional<Task> existingTask = taskRepository.findById(id);
+
+        if (existingTask.isPresent()){
+            Task task = existingTask.get();
+            task.setTitle(updatedTask.getTitle());
+            task.setDescription(updatedTask.getDescription());
+            task.setStatus(updatedTask.getStatus());
+            Task savedTask = taskRepository.save(task);
+            return ResponseEntity.ok(savedTask);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Task> deleteTask(@PathVariable Long id){
+        if (taskRepository.existsById(id)){
+            taskRepository.deleteById(id);
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 }
