@@ -1,4 +1,4 @@
-# Mana Task
+# ManaTask
 
 A full-stack task manager built with:
 - **Backend:** Java + Spring Boot + PostgreSQL
