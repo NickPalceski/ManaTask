@@ -7,10 +7,12 @@ A full-stack task manager built with:
 
 ## How to run
 ### Backend
-'''bash
+```bash
 cd backend
 mvn spring-boot:run
-
+```
 ### Frontend
+```bash
 cd frontend
 npm start
+```
